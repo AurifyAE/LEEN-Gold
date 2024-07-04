@@ -19,7 +19,7 @@ const auth = getAuth(app);
 // Function to Read News from Database
 function displayNews() {
     // Get the UID of the authenticated user
-    const uid = 'yCgoYhWoqdUKuv7b06XYXgHbG3C3';
+    const uid = 'G46UZJNWfJhGAWytlVuUzFXzKf13';
 
     if (!uid) {
         console.error('User not authenticated');
@@ -44,7 +44,7 @@ function displayNews() {
             console.log(newsArray);
             // Display the news content in a single div
             const displayNewsDiv = document.getElementById("displayNews");
-            displayNewsDiv.innerHTML = newsArray.join(" >> ");
+            displayNewsDiv.innerHTML = newsArray.join("           >>            ");
 
         })
         .catch((error) => {
