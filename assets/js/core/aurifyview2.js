@@ -291,20 +291,7 @@ async function readData() {
 async function showTable() {
     try {
         const tableData = await readData();
-        // console.log('Data read successfully:', tableData);
-
-        console.log(tableData);
-
-        let silverAskKG
-        setInterval(() => {
-            let silver = silverValue
-
-            // Silver 1GM Table Value
-            // Bid = parseFloat((parseFloat(silver) + parseFloat(silverBidSpread) || 0) * 1000).toFixed(3);
-            // silverAskKG = parseFloat((parseFloat(silver) + 0.5 + parseFloat(silverAskSpread) || 0) * 1000).toFixed(0);
-            // document.getElementById('data4').textContent = silverAskKG;
-            // console.log(ask);
-        }, 1000);
+        const tableBody = document.getElementById('tableBody');
 
         // Loop through the tableData
         for (const data of tableData) {
@@ -318,6 +305,38 @@ async function showTable() {
             const sellPremiumInputAED = data.data.sellPremiumAED;
             const buyPremiumInputAED = data.data.buyPremiumAED;
 
+            let metal;
+            let purity;
+            if (weightInput === 'KG') {
+                metal = 'GOLD'
+                purity = purityInput
+            } else if (weightInput === 'TTB') {
+                metal = 'GOLD TEN TOLA'
+                purity = purityInput
+            } else if (weightInput === 'GM') {
+                metal = 'GOLD'
+                purity = 'KT'
+            } else {
+                metal = metalInput
+                purity = purityInput
+            }
+
+            // Create a new table row for data
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td colspan="2" style="text-align: center;">${metal}</td>
+                <td style="text-align: center;"> ${weightInput}</td>
+                <td id="buyAED" style="text-align: center;">0</td>
+                <td id="sellAED" style="text-align: center;">0</td>
+            `;
+            // Append the new row to the table body
+            tableBody.appendChild(newRow);
+
+            // Create an empty row (if not the last row)
+            if (data !== tableData[tableData.length - 1]) {
+                tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="5" style="height: 7px;"></td></tr>');
+            }
+
             displaySpreadValues();
 
             setInterval(async () => {
@@ -325,7 +344,17 @@ async function showTable() {
                 let unitMultiplier = 1;
 
                 // Adjust unit multiplier based on the selected unit
-
+                if (weight === "GM") {
+                    unitMultiplier = 1;
+                } else if (weight === "KG") {
+                    unitMultiplier = 1000;
+                } else if (weight === "TTB") {
+                    unitMultiplier = 116.6400;
+                } else if (weight === "TOLA") {
+                    unitMultiplier = 11.664;
+                } else if (weight === "OZ") {
+                    unitMultiplier = 31.1034768;
+                }
 
 
                 let sellPremium = sellPremiumInputAED || 0;
@@ -333,159 +362,18 @@ async function showTable() {
                 let askSpreadValue = askSpread || 0;
                 let bidSpreadValue = bidSpread || 0;
 
-                
 
+                if (weight === "GM") {
+                    // Update the sellAED and buyAED values for the current 
+                    newRow.querySelector("#sellAED").innerText = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unitInput * unitMultiplier * (purityInput / Math.pow(10, purityInput.length)) + parseFloat(sellPremium)).toFixed(2));
+                    newRow.querySelector("#buyAED").innerText = ((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unitInput * unitMultiplier * (purityInput / Math.pow(10, purityInput.length)) + parseFloat(buyPremium)).toFixed(2);
+                } else {
+                    // Update the sellAED and buyAED values for the current row
+                    const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unitInput * unitMultiplier * (purityInput / Math.pow(10, purityInput.length)) + parseFloat(sellPremium)).toFixed(4));
+                    const buyAEDValue = parseInt((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unitInput * unitMultiplier * (purityInput / Math.pow(10, purityInput.length)) + parseFloat(buyPremium)).toFixed(0);
 
-                if (tableData[0]) {
-                    let purity = tableData[0].data.purity;
-                    let metal = tableData[0].data.metal;
-                    let unit = tableData[0].data.unit;
-                    let weight = tableData[0].data.weight;
-
-                    if (weight === "GM") {
-                        unitMultiplier = 1;
-                    } else if (weight === "KG") {
-                        unitMultiplier = 1000;
-                    } else if (weight === "TTB") {
-                        unitMultiplier = 116.6400;
-                    } else if (weight === "TOLA") {
-                        unitMultiplier = 11.664;
-                    } else if (weight === "OZ") {
-                        unitMultiplier = 31.1034768;
-                    }
-                    if (weight === "GM") {
-                        // Update the sellAED and buyAED values for the current 
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(2));
-                        const buyAEDValue = ((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(2);
-                        // document.getElementById('head2').textContent = metal;
-                        // document.getElementById('head22').textContent = purity;
-                        // document.getElementById('head23').textContent = unit;
-                        // document.getElementById('head24').textContent = weight;
-                        document.getElementById('data1').textContent = sellAEDValue
-                    } else {
-                        // Update the sellAED and buyAED values for the current row
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(4));
-                        const buyAEDValue = parseInt((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(0);
-                        // document.getElementById('head2').textContent = metal;
-                        // document.getElementById('head22').textContent = purity;
-                        // document.getElementById('head23').textContent = unit;
-                        // document.getElementById('head24').textContent = weight;
-                        document.getElementById('data1').textContent = sellAEDValue.toFixed(0)
-                    }
-                }
-
-                if (tableData[1]) {
-                    let purity = tableData[1].data.purity;
-                    let metal = tableData[1].data.metal;
-                    let unit = tableData[1].data.unit;
-                    let weight = tableData[1].data.weight;
-
-                    if (weight === "GM") {
-                        unitMultiplier = 1;
-                    } else if (weight === "KG") {
-                        unitMultiplier = 1000;
-                    } else if (weight === "TTB") {
-                        unitMultiplier = 116.6400;
-                    } else if (weight === "TOLA") {
-                        unitMultiplier = 11.664;
-                    } else if (weight === "OZ") {
-                        unitMultiplier = 31.1034768;
-                    }
-                    if (weight === "GM") {
-                        // Update the sellAED and buyAED values for the current 
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(2));
-                        const buyAEDValue = ((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(2);
-                        // document.getElementById('head3').textContent = metal;
-                        // document.getElementById('head32').textContent = purity;
-                        // document.getElementById('head33').textContent = unit;
-                        // document.getElementById('head34').textContent = weight;
-                        document.getElementById('data3').textContent = sellAEDValue
-                    } else {
-                        // Update the sellAED and buyAED values for the current row
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(4));
-                        const buyAEDValue = parseInt((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(0);
-                        // document.getElementById('head3').textContent = metal;
-                        // document.getElementById('head32').textContent = purity;
-                        // document.getElementById('head33').textContent = unit;
-                        // document.getElementById('head34').textContent = weight;
-                        document.getElementById('data3').textContent = sellAEDValue.toFixed(0)
-                    }
-                }
-
-                if (tableData[2]) {
-                    let purity = tableData[2].data.purity;
-                    let metal = tableData[2].data.metal;
-                    let unit = tableData[2].data.unit;
-                    let weight = tableData[2].data.weight;
-
-                    if (weight === "GM") {
-                        unitMultiplier = 1;
-                    } else if (weight === "KG") {
-                        unitMultiplier = 1000;
-                    } else if (weight === "TTB") {
-                        unitMultiplier = 116.6400;
-                    } else if (weight === "TOLA") {
-                        unitMultiplier = 11.664;
-                    } else if (weight === "OZ") {
-                        unitMultiplier = 31.1034768;
-                    }
-                    if (weight === "GM") {
-                        // Update the sellAED and buyAED values for the current 
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(2));
-                        const buyAEDValue = ((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(2);
-                        // document.getElementById('head4').textContent = metal;
-                        // document.getElementById('head42').textContent = purity;
-                        // document.getElementById('head43').textContent = unit;
-                        // document.getElementById('head44').textContent = weight;
-                        document.getElementById('data2').textContent = sellAEDValue
-                    } else {
-                        // Update the sellAED and buyAED values for the current row
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(4));
-                        const buyAEDValue = parseInt((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(0);
-                        // document.getElementById('head4').textContent = metal;
-                        // document.getElementById('head42').textContent = purity;
-                        // document.getElementById('head43').textContent = unit;
-                        // document.getElementById('head44').textContent = weight;
-                        document.getElementById('data2').textContent = sellAEDValue.toFixed(0)
-                    }
-                }
-
-                if (tableData[3]) {
-                    let purity = tableData[3].data.purity;
-                    let metal = tableData[3].data.metal;
-                    let unit = tableData[3].data.unit;
-                    let weight = tableData[3].data.weight;
-
-                    if (weight === "GM") {
-                        unitMultiplier = 1;
-                    } else if (weight === "KG") {
-                        unitMultiplier = 1000;
-                    } else if (weight === "TTB") {
-                        unitMultiplier = 116.6400;
-                    } else if (weight === "TOLA") {
-                        unitMultiplier = 11.664;
-                    } else if (weight === "OZ") {
-                        unitMultiplier = 31.1034768;
-                    }
-                    if (weight === "GM") {
-                        // Update the sellAED and buyAED values for the current 
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(2));
-                        const buyAEDValue = ((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(2);
-                        // document.getElementById('head1').textContent = metal;
-                        // document.getElementById('head12').textContent = purity;
-                        // document.getElementById('head13').textContent = unit;
-                        // document.getElementById('head14').textContent = weight;
-                        document.getElementById('data4').textContent = sellAEDValue
-                    } else {
-                        // Update the sellAED and buyAED values for the current row
-                        const sellAEDValue = parseFloat(((parseFloat(goldValue) + parseFloat(askSpreadValue) + parseFloat(0.5)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(sellPremium)).toFixed(4));
-                        const buyAEDValue = parseInt((parseFloat(goldValue) + parseFloat(bidSpreadValue)) * unit * unitMultiplier * (purity / Math.pow(10, purity.length)) + parseFloat(buyPremium)).toFixed(0);
-                        // document.getElementById('head1').textContent = metal;
-                        // document.getElementById('head12').textContent = purity;
-                        // document.getElementById('head13').textContent = unit;
-                        // document.getElementById('head14').textContent = weight;
-                        document.getElementById('data4').textContent = sellAEDValue.toFixed(0)
-                    }
+                    newRow.querySelector("#sellAED").innerText = parseInt(sellAEDValue).toFixed(0); // Round to remove decimals
+                    newRow.querySelector("#buyAED").innerText = parseInt(buyAEDValue).toFixed(0);   // Round to remove decimals
                 }
             }, 500)
         }
