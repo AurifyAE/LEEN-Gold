@@ -36,33 +36,33 @@
       height: 100vh;
     }
 
-    table thead tr{
+    table thead tr {
       background-color: #9DA0A1;
     }
 
-    table thead tr th{
+    table thead tr th {
       font-size: 30px;
       color: black;
       font-weight: 600;
-      padding: 12px; 
+      padding: 12px;
       text-align: center;
     }
 
-    table thead tr th span{
+    table thead tr th span {
       font-size: 20px;
       color: black;
       font-weight: 600;
     }
 
-    table tbody tr{
+    table tbody tr {
       background-color: #082b10;
     }
 
-    table tbody tr td{
+    table tbody tr td {
       font-size: 30px;
       color: #fff;
       font-weight: 600;
-      padding: 12px; 
+      padding: 12px;
       text-align: center;
     }
 
@@ -75,7 +75,7 @@
 
     .carousel-container img {
       width: 575px;
-      height: 150px;
+      height: 220px;
       border-radius: 20px;
       margin-top: 0px;
       margin-left: -35px;
@@ -95,21 +95,21 @@
       </div>
 
       <!-- Spot Rate -->
-      <div class="mt-3" style="display: flex; flex-direction: column;">
+      <div class="mt-4" style="display: flex; flex-direction: column;">
 
         <!-- Spot Rate Label -->
-        <div
+        <div class="mb-3"
           style="display: flex; flex-direction: row; justify-content: space-between; background-color: #BEC0C0; padding: 15px 20px; border-bottom: 5px solid #fff;">
-          <span style="color: black; font-size: 25px; font-weight: 600;">SPOT RATE</span>
+          <span style="color: black; font-size: 30px; font-weight: 800;">SPOT RATE</span>
           <div>
-            <i class="fa-solid fa-dollar-sign" style="color: #fff; background-color: black; padding: 5px;"></i>
-            <span style="color: black; font-size: 25px; font-weight: 600;">BID</span>
-            <span style="color: black; font-size: 20px; font-weight: 600;">oz</span>
+            <span style="color: #fff; background-color: black; padding: 3px 5px; border-radius: 5px; font-size: 22px;">$</span>
+            <span style="color: black; font-size: 30px; font-weight: 800;">BID</span>
+            <span style="color: black; font-size: 25px; font-weight: 800;">oz</span>
           </div>
           <div>
-            <i class="fa-solid fa-dollar-sign" style="color: #fff; background-color: black; padding: 5px;"></i>
-            <span style="color: black; font-size: 25px; font-weight: 600;">ASK</span>
-            <span style="color: black; font-size: 20px; font-weight: 600;">oz</span>
+            <span style="color: #fff; background-color: black; padding: 3px 5px; border-radius: 5px; font-size: 22px;">$</span>
+            <span style="color: black; font-size: 30px; font-weight: 800;">ASK</span>
+            <span style="color: black; font-size: 25px; font-weight: 800;">oz</span>
           </div>
         </div>
 
@@ -118,24 +118,24 @@
 
           <!-- Gold -->
           <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-            <span style="color: black; font-size: 28px; font-weight: 600;">GOLD</span>
+            <span style="color: black; font-size: 38px; font-weight: 800;">GOLD</span>
             <div class="spotrate">
               <div class="form-control input-box" id="goldInputLow"
-                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 600; padding: 10px;">
+                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 700; padding: 10px;">
               </div>
               <div style="display: flex;justify-content: center;align-items: center;">
                 <span
-                  style="color: #fff; background-color: red; padding: 7px 10px; font-size: 12px; font-weight: 600;">LOW</span>
+                  style="color: #fff; background-color: red; padding: 7px 10px; font-size: 12px; font-weight: 700;">LOW</span>
                 <label class="badge label-low mt-2" style="color: black; font-size: 20px; " id="lowLabelGold">0</label>
               </div>
             </div>
             <div class="spotrate">
               <div class="form-control input-box" id="goldInputHigh"
-                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 600; padding: 10px;">
+                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 700; padding: 10px;">
               </div>
               <div style="display: flex;justify-content: center;align-items: center;">
                 <span
-                  style="color: #fff; background-color: green; padding: 7px 10px; font-size: 12px; font-weight: 600;">HIGH</span>
+                  style="color: #fff; background-color: green; padding: 7px 10px; font-size: 12px; font-weight: 700;">HIGH</span>
                 <label class="badge label-low mt-2" style="color: black; font-size: 20px; " id="highLabelGold">0</label>
               </div>
             </div>
@@ -144,25 +144,25 @@
           <!-- Silver -->
           <div class="mt-5"
             style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-            <span style="color: black; font-size: 25px; font-weight: 500;">SILVER</span>
+            <span style="color: black; font-size: 30px; font-weight: 800;">SILVER</span>
             <div class="spotrate">
               <div class="form-control input-box" id="silverInputLow"
-                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 600; padding: 10px;">
+                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 700; padding: 10px;">
               </div>
               <div style="display: flex;justify-content: center;align-items: center;">
                 <span
-                  style="color: #fff; background-color: red; padding: 7px 10px; font-size: 12px; font-weight: 600;">LOW</span>
+                  style="color: #fff; background-color: red; padding: 7px 10px; font-size: 12px; font-weight: 700;">LOW</span>
                 <label class="badge label-low mt-2" style="color: black; font-size: 20px; "
                   id="lowLabelSilver">0</label>
               </div>
             </div>
             <div class="spotrate">
               <div class="form-control input-box" id="silverInputHigh"
-                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 600; padding: 10px;">
+                style="display: flex; justify-content: center; align-items: center; width: 160px; font-size: 34px; font-weight: 700; padding: 10px;">
               </div>
               <div style="display: flex;justify-content: center;align-items: center;">
                 <span
-                  style="color: #fff; background-color: green; padding: 7px 10px; font-size: 12px; font-weight: 600;">HIGH</span>
+                  style="color: #fff; background-color: green; padding: 7px 10px; font-size: 12px; font-weight: 700;">HIGH</span>
                 <label class="badge label-low mt-2" style="color: black; font-size: 20px; "
                   id="highLabelSilver">0</label>
               </div>
@@ -194,7 +194,7 @@
       </div>
 
       <!-- Table -->
-      <table>
+      <table class="mt-5">
         <thead>
           <tr>
             <th colspan="2">Commodity</th>
@@ -315,7 +315,7 @@
   </script>
   <script>
     let currentIndex = 0;
-    const images = ['./assets/images/image1.jpg', './assets/images/image2.jpg', './assets/images/image3.jpeg']; // Add your image URLs here
+    const images = ['./assets/images/image1.jpg', './assets/images/image2.webp', './assets/images/image3.jpeg']; // Add your image URLs here
     // assets\images\image1.jpg
     function showImage() {
       const carouselImage = document.getElementById("carouselImage");
